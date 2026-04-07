@@ -1,2 +1,60 @@
 @import "tailwindcss";
+@plugin "tailwindcss-motion";
 
+@theme {
+    --color-cream: #F2DBC1;
+    --color-cream-dark: #E8C9A8;
+    --color-black: #0A0A0A;
+    --color-coral: #E87461;
+    --color-coral-dark: #D4604E;
+    --color-gray: #D9D9D9;
+    --color-gray-dark: #1A1A1A;
+    --color-gray-medium: #2A2A2A;
+
+    --font-heading: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+    --font-body: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Base styles */
+html {
+    scroll-behavior: smooth;
+    background-color: var(--color-black);
+    color: var(--color-cream);
+}
+
+body {
+    font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+}
+
+code, pre, .font-mono {
+    font-family: var(--font-mono);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-black);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-gray-medium);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray);
+}
+
+/* Selection */
+::selection {
+    background-color: var(--color-coral);
+    color: var(--color-black);
+}
