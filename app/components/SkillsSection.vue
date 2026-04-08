@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { techIcons } from "~/data/techIcons";
 import { skills } from "~/data/skills";
 
 const { target, isVisible } = useScrollReveal();
@@ -33,10 +34,11 @@ const rows = computed(() => {
                     Tech
                     <span class="text-coral">stack</span>
                 </h2>
-                <p class="mt-3 text-cream/40">Press any key to continue...</p>
+                <p class="mt-3 text-cream/40">
+                    Languages, ML tooling, and things I ship with.
+                </p>
             </div>
 
-            <!-- Keyboard layout -->
             <div class="space-y-8">
                 <div
                     v-for="(row, rowIndex) in rows"
@@ -56,17 +58,28 @@ const rows = computed(() => {
                     >
                         {{ row.label }}
                     </p>
-                    <div
-                        class="flex flex-wrap justify-center gap-2 sm:gap-3"
-                        :style="{
-                            paddingLeft: `${rowIndex * 12}px`,
-                        }"
-                    >
-                        <SkillKeycap
+                    <div class="flex flex-wrap justify-center gap-2 sm:gap-2.5">
+                        <span
                             v-for="skill in row.items"
                             :key="skill.name"
-                            :skill="skill"
-                        />
+                            class="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-xs tracking-wide transition-colors sm:gap-2 sm:px-3.5 sm:text-sm"
+                            :class="
+                                skill.category === 'ai'
+                                    ? 'border-coral/35 bg-coral/8 text-coral'
+                                    : skill.category === 'language'
+                                      ? 'border-cream/15 bg-cream/6 text-cream/90'
+                                      : 'border-cream/12 bg-white/4 text-cream/80'
+                            "
+                        >
+                            <Icon
+                                :name="
+                                    techIcons[skill.name] || 'mdi:code-tags'
+                                "
+                                size="17"
+                                class="shrink-0 opacity-90"
+                            />
+                            {{ skill.name }}
+                        </span>
                     </div>
                 </div>
             </div>

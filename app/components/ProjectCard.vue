@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { techIcons } from "~/data/techIcons";
 import type { Project } from "~/types";
 
 defineProps<{
     project: Project;
-    side: "left" | "right";
 }>();
 
 const categoryColor: Record<string, string> = {
@@ -16,14 +16,13 @@ const categoryColor: Record<string, string> = {
 <template>
     <div
         class="group w-full max-w-md transition-all duration-500 hover:-translate-y-1"
-        :class="side === 'left' ? 'md:ml-auto md:mr-8' : 'md:mr-auto md:ml-8'"
     >
         <div
             class="overflow-hidden rounded-2xl border border-white/5 bg-gray-dark transition-all duration-500 hover:border-cream/10 hover:shadow-xl hover:shadow-cream/5"
         >
             <!-- Image placeholder -->
             <div
-                class="relative h-44 overflow-hidden bg-gradient-to-br sm:h-52"
+                class="relative h-36 overflow-hidden bg-gradient-to-br sm:h-44"
                 :class="project.gradient"
             >
                 <div
@@ -38,12 +37,14 @@ const categoryColor: Record<string, string> = {
                     v-if="project.ongoing"
                     class="absolute top-3 right-3 flex items-center gap-1.5 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-cream backdrop-blur-sm"
                 >
-                    <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-coral" />
+                    <span
+                        class="h-1.5 w-1.5 animate-pulse rounded-full bg-coral"
+                    />
                     Ongoing
                 </div>
             </div>
 
-            <div class="p-5">
+            <div class="p-4 sm:p-5">
                 <!-- Category tag -->
                 <span
                     class="inline-block rounded-lg border px-2.5 py-0.5 font-mono text-xs"
@@ -53,30 +54,38 @@ const categoryColor: Record<string, string> = {
                 </span>
 
                 <h3
-                    class="mt-3 font-heading text-xl font-bold text-cream transition-colors group-hover:text-white"
+                    class="mt-2.5 font-heading text-lg font-bold text-cream transition-colors group-hover:text-white sm:text-xl"
                 >
                     {{ project.title }}
                 </h3>
 
-                <p class="mt-2 text-sm leading-relaxed text-cream/50">
+                <p class="mt-1.5 text-sm leading-relaxed text-cream/50">
                     {{ project.description }}
                 </p>
 
-                <!-- Tags -->
-                <div class="mt-4 flex flex-wrap gap-1.5">
-                    <span
+                <!-- Tech icons -->
+                <div class="mt-3 flex flex-wrap items-center gap-2">
+                    <div
                         v-for="tag in project.tags"
                         :key="tag"
-                        class="rounded-md bg-white/5 px-2 py-0.5 font-mono text-xs text-cream/40"
+                        class="flex items-center gap-1.5 rounded-md bg-white/5 px-2 py-1"
+                        :title="tag"
                     >
-                        {{ tag }}
-                    </span>
+                        <Icon
+                            :name="techIcons[tag] || 'mdi:code-tags'"
+                            size="16"
+                            class="shrink-0 text-cream/50"
+                        />
+                        <span class="font-mono text-xs text-cream/40">
+                            {{ tag }}
+                        </span>
+                    </div>
                 </div>
 
                 <!-- Links -->
                 <div
                     v-if="project.links.length"
-                    class="mt-4 flex flex-wrap gap-2"
+                    class="mt-3 flex flex-wrap gap-2"
                 >
                     <a
                         v-for="link in project.links"

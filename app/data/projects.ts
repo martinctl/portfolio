@@ -22,7 +22,7 @@ export const projects: Project[] = [
         year: 2025,
         category: "ai",
         categoryLabel: "AI / ML",
-        tags: ["PyTorch", "Hugging Face", "vLLM", "RAG"],
+        tags: ["Python","PyTorch", "Hugging Face"],
         links: [
             {
                 label: "Report",
@@ -54,7 +54,7 @@ export const projects: Project[] = [
         year: 2024,
         category: "data",
         categoryLabel: "Data",
-        tags: ["Polars", "D3.js", "Big Data"],
+        tags: ["Polars", "D3.js", "React"],
         links: [
             { label: "Demo", url: "https://adaguleeer.vercel.app/" },
             {
@@ -65,19 +65,28 @@ export const projects: Project[] = [
         gradient: "from-purple-600 to-blue-700",
     },
     {
-        slug: "whokipedia-trackimo",
-        title: "Whokipedia & Trackimo",
+        slug: "whokipedia",
+        title: "Whokipedia",
         description:
-            "Two production apps: a daily celebrity guessing game with leaderboard, and a live gaming stats tracker with real-time database updates.",
+            "A daily celebrity guessing game with leaderboard — guess who's behind the blurred photo.",
         year: 2024,
         category: "web",
         categoryLabel: "Web",
-        tags: ["Nuxt", "Supabase", "TypeScript"],
-        links: [
-            { label: "Whokipedia", url: "https://whokipedia.com" },
-            { label: "Trackimo", url: "https://trackimo.lol" },
-        ],
+        tags: ["Nuxt", "Firebase", "TypeScript"],
+        links: [{ label: "Play", url: "https://whokipedia.com" }],
         gradient: "from-emerald-600 to-teal-700",
+    },
+    {
+        slug: "trackimo",
+        title: "Trackimo",
+        description:
+            "Live gaming stats tracker with real-time database updates and performance analytics.",
+        year: 2024,
+        category: "web",
+        categoryLabel: "Web",
+        tags: ["Nuxt", "PostgreSQL", "TypeScript"],
+        links: [{ label: "Try it", url: "https://trackimo.lol" }],
+        gradient: "from-sky-600 to-cyan-700",
     },
     {
         slug: "facedoodle",
@@ -87,12 +96,16 @@ export const projects: Project[] = [
         year: 2023,
         category: "web",
         categoryLabel: "Web",
-        tags: ["Vue.js", "MediaPipe", "Arduino"],
+        tags: ["Flutter", "Fusion 360", "Arduino"],
         links: [
             {
                 label: "Docs",
                 url: "https://facedoodle-docs.netlify.app/",
             },
+            {
+                label: "GitLab",
+                url: "https://gitlab.epfl.ch/facedoodle",
+            }
         ],
         gradient: "from-rose-600 to-pink-700",
     },

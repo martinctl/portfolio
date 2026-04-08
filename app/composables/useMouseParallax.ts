@@ -6,10 +6,14 @@ export function useMouseParallax(intensity = 10) {
     const handleMouseMove = (e: MouseEvent) => {
         if (!target.value) return;
         const rect = target.value.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        const x = (e.clientX - centerX) / (rect.width / 2);
-        const y = (e.clientY - centerY) / (rect.height / 2);
+        const halfW = rect.width / 2;
+        const halfH = rect.height / 2;
+        if (halfW < 4 || halfH < 4) return;
+
+        const centerX = rect.left + halfW;
+        const centerY = rect.top + halfH;
+        const x = Math.max(-1, Math.min(1, (e.clientX - centerX) / halfW));
+        const y = Math.max(-1, Math.min(1, (e.clientY - centerY) / halfH));
         rotateY.value = x * intensity;
         rotateX.value = -y * intensity;
     };

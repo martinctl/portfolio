@@ -7,20 +7,22 @@ defineProps<{
 
 <template>
     <div
-        class="flex flex-col items-center gap-1 transition-all duration-700"
-        :class="isVisible ? 'scale-100 opacity-100' : 'scale-50 opacity-0'"
+        class="flex flex-col items-center gap-2 transition-all duration-700"
+        :class="isVisible ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0'"
     >
-        <!-- Keycap node -->
+        <!-- Minimal marker on the line -->
         <div
-            class="relative flex h-10 w-10 items-center justify-center rounded-xl border border-cream-dark/40 bg-gradient-to-b from-white to-cream shadow-md"
+            class="ring-4 ring-black"
+            aria-hidden="true"
         >
-            <span class="font-mono text-xs font-bold text-black">⌨</span>
-            <!-- Shadow underneath -->
             <div
-                class="absolute -bottom-0.5 left-1 right-1 -z-10 h-full rounded-xl bg-cream-dark/30"
+                class="size-2.5 rounded-full bg-coral shadow-[0_0_12px_rgba(232,116,97,0.45)]"
             />
         </div>
-        <!-- Year label -->
-        <span class="font-mono text-xs text-cream/40">{{ year }}</span>
+        <span
+            class="font-mono text-[11px] font-medium tabular-nums tracking-wide text-cream/45"
+        >
+            {{ year }}
+        </span>
     </div>
 </template>

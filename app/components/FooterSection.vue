@@ -22,7 +22,7 @@ const socials = [
     <footer id="contact" class="border-t border-white/5 bg-black py-20">
         <div class="mx-auto max-w-6xl px-6 text-center">
             <img
-                src="~/assets/logo_full.svg"
+                src="~/assets/logo_full_light.svg"
                 alt="Martin Catheland"
                 class="mx-auto mb-8 h-16 w-16"
             />

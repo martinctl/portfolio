@@ -51,7 +51,8 @@ const facts = [
                         <div
                             class="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-cream/10 bg-gray-dark px-5 py-2 shadow-lg"
                         >
-                            <span class="font-mono text-sm text-cream/70"
+                            <span
+                                class="font-mono text-sm whitespace-nowrap text-cream/70"
                                 >Martin Catheland</span
                             >
                         </div>

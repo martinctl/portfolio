@@ -1,105 +1,61 @@
 <script setup lang="ts">
-const { target, rotateX, rotateY } = useMouseParallax(8);
+import { useIntersectionObserver } from "@vueuse/core";
 
-const keysVisible = ref(false);
+const heroSection = ref<HTMLElement | null>(null);
+const { target, rotateX, rotateY, resetRotation } = useMouseParallax(4);
+
+const heroWasIntersecting = ref(false);
+useIntersectionObserver(
+    heroSection,
+    ([entry]) => {
+        const on = !!entry?.isIntersecting;
+        if (on && !heroWasIntersecting.value) {
+            resetRotation();
+        }
+        heroWasIntersecting.value = on;
+    },
+    { threshold: 0.15 },
+);
+
+const visible = ref(false);
 const taglineVisible = ref(false);
 
 onMounted(() => {
-    setTimeout(() => (keysVisible.value = true), 300);
-    setTimeout(() => (taglineVisible.value = true), 1400);
+    setTimeout(() => (visible.value = true), 300);
+    setTimeout(() => (taglineVisible.value = true), 1200);
 });
-
-const keys = [
-    { label: "martin", delay: "0ms" },
-    { label: "ctl", delay: "200ms" },
-    { label: ".", delay: "400ms" },
-    { label: "dev", delay: "600ms" },
-];
 </script>
 
 <template>
     <section
+        ref="heroSection"
         class="relative flex min-h-screen items-center justify-center overflow-hidden bg-black"
     >
         <!-- Background glow -->
         <div
-            class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(232,116,97,0.08)_0%,_transparent_70%)]"
+            class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_50%_44%,_rgba(232,116,97,0.11)_0%,_rgba(232,116,97,0.04)_45%,_transparent_72%)]"
         />
 
         <!-- Content -->
         <div class="relative z-10 px-6 text-center">
-            <!-- 3D Keyboard -->
+            <!-- 3D Keyboard from Figma -->
             <div
                 ref="target"
-                class="mb-12 inline-block"
-                :style="{
-                    perspective: '800px',
-                }"
+                class="mb-12 inline-block transition-all duration-1000 ease-out"
+                :class="
+                    visible
+                        ? 'translate-y-0 scale-100 opacity-100'
+                        : 'translate-y-6 scale-95 opacity-0'
+                "
+                :style="{ perspective: '800px' }"
             >
                 <div
-                    class="transition-transform duration-200 ease-out"
+                    class="transform-3d transition-transform duration-200 ease-out"
                     :style="{
                         transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
                     }"
                 >
-                    <div class="flex items-center gap-3 sm:gap-4">
-                        <div
-                            v-for="(key, i) in keys"
-                            :key="key.label"
-                            class="transition-all duration-700 ease-out"
-                            :class="
-                                keysVisible
-                                    ? 'translate-y-0 opacity-100'
-                                    : 'translate-y-8 opacity-0'
-                            "
-                            :style="{ transitionDelay: key.delay }"
-                        >
-                            <button
-                                class="group relative cursor-default select-none"
-                                @mousedown="
-                                    ($event.currentTarget as HTMLElement)?.classList.add(
-                                        'scale-[0.97]',
-                                        'translate-y-0.5',
-                                    )
-                                "
-                                @mouseup="
-                                    ($event.currentTarget as HTMLElement)?.classList.remove(
-                                        'scale-[0.97]',
-                                        'translate-y-0.5',
-                                    )
-                                "
-                                @mouseleave="
-                                    ($event.currentTarget as HTMLElement)?.classList.remove(
-                                        'scale-[0.97]',
-                                        'translate-y-0.5',
-                                    )
-                                "
-                            >
-                                <!-- Keycap shadow -->
-                                <div
-                                    class="absolute -bottom-1 left-1 right-1 h-full rounded-xl bg-cream-dark/30 transition-all duration-150 group-active:bottom-0"
-                                />
-                                <!-- Keycap body -->
-                                <div
-                                    class="relative rounded-xl border border-cream-dark/40 bg-gradient-to-b from-white to-cream px-5 py-3 shadow-lg transition-all duration-150 sm:px-7 sm:py-4"
-                                    :class="
-                                        i === 1
-                                            ? 'ring-2 ring-coral/30'
-                                            : ''
-                                    "
-                                >
-                                    <span
-                                        class="font-mono text-lg font-bold text-black sm:text-2xl"
-                                        :class="
-                                            i === 1 ? 'text-coral-dark' : ''
-                                        "
-                                    >
-                                        {{ key.label }}
-                                    </span>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
+                    <HeroKeyboard />
                 </div>
             </div>
 
