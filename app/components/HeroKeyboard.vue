@@ -102,7 +102,8 @@ function pressKey(index: number) {
             :class="{ 'key--pressed': pressedKey === 0 }"
             @mousedown="pressKey(0)"
         >
-            <g filter="url(#ks)">
+            <use href="#k0-cap" class="key__shadow" />
+            <g id="k0-cap">
                 <path
                     fill-rule="evenodd"
                     clip-rule="evenodd"
@@ -136,7 +137,8 @@ function pressKey(index: number) {
             :class="{ 'key--pressed': pressedKey === 1 }"
             @mousedown="pressKey(1)"
         >
-            <g filter="url(#ks)">
+            <use href="#k1-cap" class="key__shadow" />
+            <g id="k1-cap">
                 <path
                     fill-rule="evenodd"
                     clip-rule="evenodd"
@@ -170,7 +172,8 @@ function pressKey(index: number) {
             :class="{ 'key--pressed': pressedKey === 2 }"
             @mousedown="pressKey(2)"
         >
-            <g filter="url(#ks)">
+            <use href="#k2-cap" class="key__shadow" />
+            <g id="k2-cap">
                 <path
                     fill-rule="evenodd"
                     clip-rule="evenodd"
@@ -204,7 +207,8 @@ function pressKey(index: number) {
             :class="{ 'key--pressed': pressedKey === 3 }"
             @mousedown="pressKey(3)"
         >
-            <g filter="url(#ks)">
+            <use href="#k3-cap" class="key__shadow" />
+            <g id="k3-cap">
                 <path
                     fill-rule="evenodd"
                     clip-rule="evenodd"
@@ -239,20 +243,32 @@ function pressKey(index: number) {
     cursor: pointer;
 }
 
-.key {
+.key > :not(.key__shadow) {
     transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform-origin: center center;
 }
 
-.key:hover {
+.key:hover > :not(.key__shadow) {
     filter: brightness(1.03);
 }
 
-.key--pressed {
+.key--pressed > :not(.key__shadow) {
     transform: translate(1.5px, 3px);
 }
 
 .key--pressed path[fill="#F2DBC1"] {
     opacity: 0.4;
+}
+
+.key__shadow {
+    transform: translate(0, 4px);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: brightness(0);
+    opacity: 0.33;
+    pointer-events: none;
+}
+
+.key--pressed .key__shadow {
+    transform: translate(1.5px, 3.5px);
 }
 </style>
