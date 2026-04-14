@@ -3,10 +3,12 @@ const pressedKey = ref<number | null>(null);
 const typed = ref("");
 const introDone = ref(false);
 const rippleKey = ref(0);
+/** Ripple origin (viewBox coords) — ctl vs dot keycap centers */
+const rippleCenter = ref({ cx: 119, cy: 25 });
 
 const KEY_CONFIG = [
     { segment: "martin", href: "#about" },
-    { segment: "ctl", href: "#contact" },
+    { segment: "ctl", href: null },
     { segment: ".", href: null },
     { segment: "dev", href: "#projects" },
 ] as const;
@@ -27,7 +29,13 @@ function pressKey(index: number, opts: PressOpts = {}) {
 
     animatePress(index);
     if (typeOut) typed.value += config.segment;
-    if (index === 2) rippleKey.value++;
+    if (index === 1) {
+        rippleCenter.value = { cx: 85, cy: 32 };
+        rippleKey.value++;
+    } else if (index === 2) {
+        rippleCenter.value = { cx: 115, cy: 25 };
+        rippleKey.value++;
+    }
 
     if (navigate && config.href) {
         const href = config.href;
@@ -302,7 +310,12 @@ onUnmounted(() => {
         </g>
         <!-- Subtle pulse emitted when the "." key is pressed -->
         <g v-if="rippleKey > 0" :key="rippleKey" class="dot-ripple-layer">
-            <circle cx="113" cy="25" r="4" class="dot-ripple" />
+            <circle
+                :cx="rippleCenter.cx"
+                :cy="rippleCenter.cy"
+                r="4"
+                class="dot-ripple"
+            />
         </g>
     </svg>
 
@@ -358,7 +371,7 @@ onUnmounted(() => {
     50%, 100% { opacity: 0; }
 }
 
-/* --- Dot key ripple --- */
+/* --- ctl / dot key ripple --- */
 .dot-ripple-layer {
     pointer-events: none;
 }
