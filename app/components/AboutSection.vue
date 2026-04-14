@@ -26,7 +26,7 @@ const facts = [
                     <div class="relative">
                         <!-- Decorative frame -->
                         <div
-                            class="absolute -inset-3 rounded-3xl border border-cream/10 bg-gradient-to-br from-cream/5 to-transparent" />
+                            class="absolute -inset-3 rounded-3xl border border-cream/10 bg-linear-to-br from-cream/5 to-transparent" />
                         <!-- Photo (CSS background keeps it out of Google Images) -->
                         <div class="relative h-72 w-56 overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat sm:h-80 sm:w-64"
                             :style="{ backgroundImage: `url('${photoCv}')` }" role="presentation" aria-hidden="true" />

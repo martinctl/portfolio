@@ -31,9 +31,9 @@ onMounted(() => {
         ref="heroSection"
         class="relative flex min-h-screen items-center justify-center overflow-hidden bg-black"
     >
-        <!-- Background glow -->
+        <!-- Background glow (uses @theme colors from main.css) -->
         <div
-            class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_50%_44%,_rgba(232,116,97,0.11)_0%,_rgba(232,116,97,0.04)_45%,_transparent_72%)]"
+            class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_54%_at_50%_44%,color-mix(in_oklab,var(--color-coral)_12%,transparent)_0%,color-mix(in_oklab,var(--color-coral)_5%,transparent)_46%,transparent_72%)]"
         />
 
         <!-- Content -->

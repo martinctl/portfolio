@@ -49,8 +49,8 @@ function getLinkAttrs(href: string) {
                     :aria-label="link.label"
                     class="group relative flex min-h-13 flex-1 flex-col items-center justify-center gap-0.5 px-2 py-2.5 transition-colors duration-200 sm:flex-row sm:gap-2 sm:px-4"
                     :class="'highlight' in link && link.highlight
-                            ? 'bg-coral/12 text-coral hover:bg-coral/20 hover:text-coral'
-                            : 'text-cream/60 hover:bg-white/6 hover:text-cream'
+                        ? 'bg-coral/12 text-coral hover:bg-coral/20 hover:text-coral'
+                        : 'text-cream/60 hover:bg-white/6 hover:text-cream'
                         ">
                     <Icon :name="link.icon" size="22" class="shrink-0" />
                     <span
@@ -66,8 +66,7 @@ function getLinkAttrs(href: string) {
 
             <div class="border-t border-white/5 pt-8 font-mono text-xs text-cream/30">
                 <p>
-                    Built with Nuxt, Tailwind & too much coffee. &copy;
-                    {{ new Date().getFullYear() }} Martin Catheland.
+                    &copy; {{ new Date().getFullYear() }} Martin Catheland
                 </p>
             </div>
         </div>
