@@ -300,10 +300,9 @@ onUnmounted(() => {
                 fill="black"
             />
         </g>
-        <!-- Ripple emitted when the "." key is pressed -->
+        <!-- Subtle pulse emitted when the "." key is pressed -->
         <g v-if="rippleKey > 0" :key="rippleKey" class="dot-ripple-layer">
-            <circle cx="113" cy="25" r="3" class="dot-ripple" />
-            <circle cx="113" cy="25" r="3" class="dot-ripple dot-ripple--delayed" />
+            <circle cx="113" cy="25" r="4" class="dot-ripple" />
         </g>
     </svg>
 
@@ -367,27 +366,19 @@ onUnmounted(() => {
 .dot-ripple {
     fill: none;
     stroke: var(--color-cream);
-    stroke-width: 1.5;
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: dotRipple 0.75s ease-out forwards;
-}
-
-.dot-ripple--delayed {
-    animation-delay: 0.12s;
-    opacity: 0;
+    animation: dotRipple 0.55s ease-out forwards;
 }
 
 @keyframes dotRipple {
     0% {
-        r: 3;
-        opacity: 0.9;
-        stroke-width: 2;
+        r: 4;
+        opacity: 0.55;
+        stroke-width: 1;
     }
     100% {
-        r: 55;
+        r: 13;
         opacity: 0;
-        stroke-width: 0.5;
+        stroke-width: 0.3;
     }
 }
 
