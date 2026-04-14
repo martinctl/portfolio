@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import photoCv from "~/assets/Photo-CV.jpg";
+
 const { target, isVisible } = useScrollReveal();
 
 const facts = [
@@ -34,19 +36,13 @@ const facts = [
                         <div
                             class="absolute -inset-3 rounded-3xl border border-cream/10 bg-gradient-to-br from-cream/5 to-transparent"
                         />
-                        <!-- Photo placeholder -->
+                        <!-- Photo (CSS background keeps it out of Google Images) -->
                         <div
-                            class="relative h-72 w-56 overflow-hidden rounded-2xl bg-gradient-to-br from-gray-medium to-gray-dark sm:h-80 sm:w-64"
-                        >
-                            <div
-                                class="flex h-full flex-col items-center justify-center gap-3 text-cream/20"
-                            >
-                                <Icon name="mdi:account-outline" size="48" />
-                                <span class="font-mono text-xs"
-                                    >photo coming soon</span
-                                >
-                            </div>
-                        </div>
+                            class="relative h-72 w-56 overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat sm:h-80 sm:w-64"
+                            :style="{ backgroundImage: `url('${photoCv}')` }"
+                            role="presentation"
+                            aria-hidden="true"
+                        />
                         <!-- Name badge -->
                         <div
                             class="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-cream/10 bg-gray-dark px-5 py-2 shadow-lg"

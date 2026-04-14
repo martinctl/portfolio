@@ -64,10 +64,10 @@ const lineProgress = computed(() => {
             </div>
 
             <!-- Timeline -->
-            <div class="relative">
+            <div class="relative mx-auto max-w-xs md:max-w-none">
                 <!-- Central line -->
                 <div
-                    class="absolute top-0 left-4 h-full w-px origin-top bg-cream/10 md:left-1/2 md:-translate-x-px"
+                    class="absolute top-0 left-4 h-full w-px origin-top -translate-x-1/2 bg-cream/10 md:left-1/2"
                 >
                     <div
                         class="h-full w-full bg-linear-to-b from-coral/60 via-cream/30 to-cream/10 transition-transform duration-100 ease-out"

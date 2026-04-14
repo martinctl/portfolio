@@ -1,13 +1,78 @@
 <script setup lang="ts">
 const pressedKey = ref<number | null>(null);
+const typed = ref("");
+const introDone = ref(false);
+const rippleKey = ref(0);
 
-function pressKey(index: number) {
+const KEY_CONFIG = [
+    { segment: "martin", href: "#about" },
+    { segment: "ctl", href: "#contact" },
+    { segment: ".", href: null },
+    { segment: "dev", href: "#projects" },
+] as const;
+
+// ---- Press handling ----
+function animatePress(index: number) {
     pressedKey.value = index;
-    setTimeout(() => (pressedKey.value = null), 200);
+    setTimeout(() => {
+        if (pressedKey.value === index) pressedKey.value = null;
+    }, 200);
 }
+
+type PressOpts = { navigate?: boolean; typeOut?: boolean };
+function pressKey(index: number, opts: PressOpts = {}) {
+    const { navigate = true, typeOut = false } = opts;
+    const config = KEY_CONFIG[index];
+    if (!config) return;
+
+    animatePress(index);
+    if (typeOut) typed.value += config.segment;
+    if (index === 2) rippleKey.value++;
+
+    if (navigate && config.href) {
+        const href = config.href;
+        setTimeout(() => {
+            const el = document.querySelector(href);
+            if (el) el.scrollIntoView({ behavior: "smooth" });
+        }, 180);
+    }
+}
+
+// ---- Intro reveal: auto-presses each key typing "martinctl.dev" ----
+async function playIntro() {
+    typed.value = "";
+    for (let i = 0; i < KEY_CONFIG.length; i++) {
+        pressKey(i, { navigate: false, typeOut: true });
+        await new Promise((r) => setTimeout(r, 320));
+    }
+    introDone.value = true;
+}
+
+// ---- Real keyboard sync ----
+function onKeydown(e: KeyboardEvent) {
+    const target = e.target as HTMLElement | null;
+    const tag = target?.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || target?.isContentEditable) return;
+
+    const k = e.key;
+    if (k === "m" || k === "M") pressKey(0);
+    else if (k === "c" || k === "C" || k === "Control") pressKey(1);
+    else if (k === ".") pressKey(2);
+    else if (k === "d" || k === "D") pressKey(3);
+}
+
+onMounted(() => {
+    window.addEventListener("keydown", onKeydown);
+    setTimeout(playIntro, 1400);
+});
+
+onUnmounted(() => {
+    window.removeEventListener("keydown", onKeydown);
+});
 </script>
 
 <template>
+    <div class="hero-keyboard-wrapper flex flex-col items-center gap-4">
     <svg
         viewBox="0 0 173 78"
         fill="none"
@@ -100,7 +165,7 @@ function pressKey(index: number) {
         <g
             class="key"
             :class="{ 'key--pressed': pressedKey === 0 }"
-            @mousedown="pressKey(0)"
+            @click="pressKey(0)"
         >
             <use href="#k0-cap" class="key__shadow" />
             <g id="k0-cap">
@@ -135,7 +200,7 @@ function pressKey(index: number) {
         <g
             class="key"
             :class="{ 'key--pressed': pressedKey === 1 }"
-            @mousedown="pressKey(1)"
+            @click="pressKey(1)"
         >
             <use href="#k1-cap" class="key__shadow" />
             <g id="k1-cap">
@@ -170,7 +235,7 @@ function pressKey(index: number) {
         <g
             class="key"
             :class="{ 'key--pressed': pressedKey === 2 }"
-            @mousedown="pressKey(2)"
+            @click="pressKey(2)"
         >
             <use href="#k2-cap" class="key__shadow" />
             <g id="k2-cap">
@@ -205,7 +270,7 @@ function pressKey(index: number) {
         <g
             class="key"
             :class="{ 'key--pressed': pressedKey === 3 }"
-            @mousedown="pressKey(3)"
+            @click="pressKey(3)"
         >
             <use href="#k3-cap" class="key__shadow" />
             <g id="k3-cap">
@@ -235,12 +300,95 @@ function pressKey(index: number) {
                 fill="black"
             />
         </g>
+        <!-- Ripple emitted when the "." key is pressed -->
+        <g v-if="rippleKey > 0" :key="rippleKey" class="dot-ripple-layer">
+            <circle cx="113" cy="25" r="3" class="dot-ripple" />
+            <circle cx="113" cy="25" r="3" class="dot-ripple dot-ripple--delayed" />
+        </g>
     </svg>
+
+        <!-- Terminal-style readout typed during intro -->
+        <div class="terminal font-mono">
+            <span class="terminal__prompt">$&nbsp;</span><span class="terminal__text">{{ typed }}</span><span
+                class="terminal__caret"
+                :class="{ 'terminal__caret--blink': introDone }"
+                >_</span
+            >
+        </div>
+    </div>
 </template>
 
 <style scoped>
+.hero-keyboard-wrapper {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 .hero-keyboard {
     cursor: pointer;
+}
+
+/* --- Terminal readout --- */
+.terminal {
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    color: rgba(242, 219, 193, 0.7);
+    min-height: 1.4em;
+}
+
+.terminal__prompt {
+    color: var(--color-coral);
+}
+
+.terminal__text {
+    color: var(--color-cream);
+}
+
+.terminal__caret {
+    display: inline-block;
+    margin-left: 1px;
+    color: var(--color-cream);
+}
+
+.terminal__caret--blink {
+    animation: caretBlink 1s step-end infinite;
+}
+
+@keyframes caretBlink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+/* --- Dot key ripple --- */
+.dot-ripple-layer {
+    pointer-events: none;
+}
+
+.dot-ripple {
+    fill: none;
+    stroke: var(--color-cream);
+    stroke-width: 1.5;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: dotRipple 0.75s ease-out forwards;
+}
+
+.dot-ripple--delayed {
+    animation-delay: 0.12s;
+    opacity: 0;
+}
+
+@keyframes dotRipple {
+    0% {
+        r: 3;
+        opacity: 0.9;
+        stroke-width: 2;
+    }
+    100% {
+        r: 55;
+        opacity: 0;
+        stroke-width: 0.5;
+    }
 }
 
 .key > :not(.key__shadow) {

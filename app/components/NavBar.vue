@@ -26,7 +26,7 @@ const links = [
         >
             <a href="#" class="group flex items-center gap-2">
                 <img
-                    src="~/assets/logo_keycaps.svg"
+                    src="~/assets/logo_full_light.svg"
                     alt="ctl"
                     class="h-8 w-8 transition-transform duration-300 group-hover:-translate-y-0.5"
                 />

@@ -9,6 +9,8 @@ export interface Project {
     ongoing?: boolean;
     links: { label: string; url: string }[];
     gradient: string; // placeholder gradient
+    /** Bundled or public URL after `projects.ts` resolves `coverImage` paths */
+    coverImage?: string;
 }
 
 export interface Skill {

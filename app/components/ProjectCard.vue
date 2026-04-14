@@ -20,12 +20,19 @@ const categoryColor: Record<string, string> = {
         <div
             class="overflow-hidden rounded-2xl border border-white/5 bg-gray-dark transition-all duration-500 hover:border-cream/10 hover:shadow-xl hover:shadow-cream/5"
         >
-            <!-- Image placeholder -->
+            <!-- Hero / placeholder -->
             <div
-                class="relative h-36 overflow-hidden bg-gradient-to-br sm:h-44"
-                :class="project.gradient"
+                class="relative h-36 overflow-hidden bg-linear-to-br sm:h-44"
+                :class="project.coverImage ? '' : project.gradient"
             >
+                <img
+                    v-if="project.coverImage"
+                    :src="project.coverImage"
+                    :alt="`${project.title} preview`"
+                    class="absolute inset-0 h-full w-full object-cover"
+                />
                 <div
+                    v-else
                     class="absolute inset-0 flex items-center justify-center bg-black/20"
                 >
                     <span class="font-mono text-sm text-white/40"
