@@ -90,7 +90,7 @@ const projectInputs: ProjectInput[] = [
     },
     {
         slug: "gaming-youtube",
-        title: "Gaming on YouTube",
+        title: "YouTube Gaming Data Analysis",
         description:
             "Processed 300GB+ dataset with out-of-core lazy dataframes. Built relational network graphs and interactive visualizations.",
         year: 2024,
