@@ -26,6 +26,17 @@ export default defineNuxtConfig({
                 },
             ],
             htmlAttrs: { lang: "en" },
+            script: [
+                {
+                    defer: true,
+                    "data-domain": "martinctl.dev",
+                    src: "https://plausible.martinctl.dev/js/script.file-downloads.js",
+                },
+                {
+                    innerHTML:
+                        "window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }",
+                },
+            ],
         },
     },
 });
